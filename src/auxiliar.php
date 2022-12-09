@@ -8,7 +8,7 @@
  //Conectar a base de datos.
 function conectar()
 {
-    return new \PDO('pgsql:host=localhost,dbname=alumnos', 'alumnos', 'alumnos');
+    return new \PDO('pgsql:host=localhost,dbname=albumes', 'albumes', 'albumes');
 }
 
 //Evitar inyeccioón de código malicioso.

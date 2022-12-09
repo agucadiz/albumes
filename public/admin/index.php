@@ -24,72 +24,36 @@
     require '../../src/_menu.php'; // Menú login.
     require_once '../../src/_alerts.php'; //alertas error y exito.
 
-
-    $nombre = obtener_get('nombre');
-    ?>
-
-    <!-- Buscador de alumnos -->
-    <div class="container mx-auto mt-10">
-        <h1 class="block mb-2 text-base font-black text-gray-900 dark:text-white">Búsqueda</h1>
-        <form action="" method="get">
-            <div class="mb-2">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Nombre:
-                    <input type="text" name="nombre" value="<?= hh($nombre) ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </label>
-            </div>
-            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Buscar</button>
-        </form>
-    </div>
-    <?php
+    //Consulta tabla
     $pdo = conectar();
-    $pdo->beginTransaction();
-    $pdo->exec('LOCK TABLE alumnos IN SHARE MODE');
-    $where = [];
-    $execute = [];
-    if (isset($nombre) && $nombre != '') {
-        $where[] = 'lower(nombre) LIKE lower(:nombre)';
-        $execute[':nombre'] = "%$nombre%";
-    }
-    $where = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
-    //Consulta buscador.
-    $sent = $pdo->prepare("SELECT COUNT(*) FROM alumnos $where");
-    $sent->execute($execute);
-    $total = $sent->fetchColumn();
-    //Consulta tabla. Nota final.
-    $sent = $pdo->prepare("SELECT alumnos.id, nombre, ROUND(AVG(nota),2) 
-                           FROM alumnos LEFT JOIN notas ON alumnos.id=notas.alumno_id 
-                           $where 
-                           GROUP BY alumnos.id 
-                           ORDER BY alumnos.id");
-    $sent->execute($execute);
-    $pdo->commit();
+    $sent = $pdo->query("SELECT albumes.id AS albumid, albumes.titulo AS album, temas.id AS cancionid, temas.titulo AS cancion
+                           FROM albumes FULL JOIN temas ON albumes.id=temas.id 
+                           ORDER BY albumes.titulo");
     ?>
 
-    <!-- Tabla alumnos  -->
+    <!-- Tabla albumes  -->
     <div class="container mx-auto relative mt-10 mb-10 shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <th scope="col" class="py-3 px-6">Nombre</th>
-                <th scope="col" class="py-3 px-6">Nota</th>
+                <th scope="col" class="py-3 px-6">Album</th>
+                <th scope="col" class="py-3 px-6">Tema</th>
                 <th scope="col" class="py-3 px-6 text-center">Opciones</th>
             </thead>
             <tbody>
                 <?php foreach ($sent as $fila) : ?>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <!-- Nombre alumno y link a criterios--> 
-                        <td class="py-4 px-6"><a href="criterios.php?id=<?= $fila['id'] ?>"> <?=hh($fila['nombre'])?> </a></td>
-                        <!-- Nota -->
-                        <td class="py-4 px-6"> <?=hh($fila['round'])?> </td>
+                        <!-- Nombre album --> 
+                        <td class="py-4 px-6"> <?=hh($fila['album'])?> </td>
+                        <!-- Nombre tema -->
+                        <td class="py-4 px-6"> <?=hh($fila['cancion'])?> </td>
                         <td class="py-4 px-6 text-center">
-                            <!-- Modificar alumnos  -->
-                            <a href="modificar.php?id=<?= $fila['id'] ?>&nombrem=<?= $fila['nombre'] ?>" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+                            <!-- Modificar albumes  -->
+                            <a href="modificar.php?id=<?= $fila['albumid'] ?>&nombrem=<?= $fila['album'] ?>" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
                                 Editar</a>
-                            <!-- Eliminar alumnos  -->
+                            <!-- Eliminar albumes  -->
                             <form action="borrar.php" method="POST" class="inline">
-                                <input type="hidden" name="id" value="<?= hh($fila['id']) ?>">
-                                <button type="submit" onclick="cambiar(event, <?= hh($fila['id']) ?>)" data-modal-toggle="popup-modal-borrar" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                <input type="hidden" name="id" value="<?= hh($fila['albumid']) ?>">
+                                <button type="submit" onclick="cambiar(event, <?= hh($fila['albumid']) ?>)" data-modal-toggle="popup-modal-borrar" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                     Borrar
                                 </button>
                             </form>
@@ -98,13 +62,11 @@
                 <?php endforeach ?>
 
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <!-- Total alumnos -->
-                    <td>Número total de filas: <?= hh($total) ?></td>
                     <td></td>
                     <td class="py-4 px-6 text-center">
-                        <!-- Insertar Alumnos -->
+                        <!-- Insertar albumes -->
                         <a href="insertar.php" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            Insertar alumno
+                            Insertar album
                         </a>
                     </td>
                 </tr>
