@@ -26,7 +26,7 @@
   }
 
   if (isset($nombre) && $nombre != '') {
-    \App\Tablas\Alumno::modificar($id, $nombre, $pdo);
+    \App\Tablas\Album::modificar($id, $nombre, $pdo);
     $_SESSION['exito'] = "El alumno se ha modificado correctamente.";
     return volver_admin();
   }

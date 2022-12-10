@@ -38,9 +38,10 @@ class Album
 
     public static function borrar($id, ?PDO $pdo = null)
     {
+    
         $pdo = $pdo ?? conectar();
 
-        $sent = $pdo->prepare("DELETE FROM alumnos
+        $sent = $pdo->prepare("DELETE FROM albumes
                                      WHERE id = :id");
         $sent->execute([':id' => $id]);
     }
