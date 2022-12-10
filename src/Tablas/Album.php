@@ -26,14 +26,14 @@ class Album
         $sent->execute([':titulo' => $titulo, ':anyo' => $anyo]);
     }
 
-    public static function modificar($id, $titulo, ?PDO $pdo = null)
+    public static function modificar($id, $titulo, $anyo, ?PDO $pdo = null)
     {
         $pdo = $pdo ?? conectar();
 
         $sent = $pdo->prepare("UPDATE albumes 
-                                  SET titulo= :titulo
+                                  SET titulo = :titulo, anyo = :anyo
                                 WHERE id = :id");
-        $sent->execute([':id' => $id, ':titulo' => $titulo]);
+        $sent->execute([':id' => $id, ':titulo' => $titulo, ':anyo' => $anyo]);
     }
 
     public static function borrar($id, ?PDO $pdo = null)

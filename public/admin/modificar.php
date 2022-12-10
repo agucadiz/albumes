@@ -16,18 +16,15 @@
 
   $pdo = conectar();
 
-  $id = obtener_get('id');
-  $nombrem = obtener_get('nombrem');
-  $nombre = obtener_post('nombre');
+  $id = obtener_get('albumid');
+  $nombre = obtener_get('nombre');
+  $nom_anyo = obtener_get('anyo');
+  $album = obtener_post('album');
+  $anyo = obtener_post('anyo');
 
-  if ($nombre == $nombrem) {
-    unset($_SESSION['error']);
-    $_SESSION['error'] = 'El alumno no se ha modificado.';   
-  }
-
-  if (isset($nombre) && $nombre != '') {
-    \App\Tablas\Album::modificar($id, $nombre, $pdo);
-    $_SESSION['exito'] = "El alumno se ha modificado correctamente.";
+  if (isset($album) && $album != '') {
+    \App\Tablas\Album::modificar($id, $album, $anyo, $pdo);
+    $_SESSION['exito'] = "El album se ha modificado correctamente.";
     return volver_admin();
   }
   ?>
@@ -35,9 +32,13 @@
 
   <form class="mt-5 mr-96 ml-96" action="" method="POST">
     <div class="mb-6">
-      <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-        Nombre Alumno</label>
-      <input type="text" id="nombre" name="nombre" value="<?= $nombrem ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+      <label for="album" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+        Nombre album</label>
+      <input type="text" id="album" name="album" value="<?= $nombre ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+
+      <label for="anyo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+        Año album</label>
+      <input type="text" id="anyo" name="anyo" value="<?= $nom_anyo ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
     </div>
 
     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
