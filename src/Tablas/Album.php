@@ -30,7 +30,7 @@ class Album
     {
         $pdo = $pdo ?? conectar();
 
-        $sent = $pdo->prepare("UPDATE albumes 
+        $sent = $pdo->prepare("UPDATE albumes
                                   SET titulo = :titulo, anyo = :anyo
                                 WHERE id = :id");
         $sent->execute([':id' => $id, ':titulo' => $titulo, ':anyo' => $anyo]);

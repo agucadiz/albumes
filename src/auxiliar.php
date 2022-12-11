@@ -49,3 +49,9 @@ function redirigir_login()
 {
     header('Location: /login.php');
 }
+
+//Formato monetario
+function dinero($s)
+{
+    return number_format($s, 2, ',', ' ') . ' €';
+}

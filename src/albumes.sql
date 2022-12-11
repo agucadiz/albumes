@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS albumes CASCADE;
 CREATE TABLE albumes (
     id          bigserial     PRIMARY KEY,
     titulo      varchar(255)  NOT NULL,
-    anyo        numeric(4)    NOT NULL
+    anyo        numeric(4)    NOT NULL,
+    precio      numeric(4,2) NOT NULL
 );
 
 DROP TABLE IF EXISTS artista CASCADE;
@@ -48,10 +49,10 @@ CREATE TABLE usuarios (
 
 
 -- Carga inicial de datos de prueba:
- INSERT INTO albumes (titulo, anyo)
- VALUES ('Más', '1990'),
-        ('Palabra de mujer', '1995'),
-        ('Estrella de mar', '2000');
+ INSERT INTO albumes (titulo, anyo, precio)
+ VALUES ('Más', '1990', '30.34'),
+        ('Palabra de mujer', '1995', '25.46'),
+        ('Estrella de mar', '2000', '29.50');
 
  INSERT INTO artista (nombre)
  VALUES ('Alejandro Sanz'),

@@ -26,7 +26,7 @@
 
     //Consulta tabla
     $pdo = conectar();
-    $sent = $pdo->query("SELECT albumes.id AS albumid, albumes.titulo AS album, albumes.anyo AS album_anyo, temas.id AS cancionid, temas.titulo AS cancion
+    $sent = $pdo->query("SELECT albumes.id AS albumid, albumes.titulo AS album, albumes.anyo AS album_anyo, precio, temas.id AS cancionid, temas.titulo AS cancion
                            FROM albumes FULL JOIN temas ON albumes.id=temas.id 
                            ORDER BY albumes.titulo");
     ?>
@@ -37,6 +37,7 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <th scope="col" class="py-3 px-6">Album</th>
                 <th scope="col" class="py-3 px-6">Año</th>
+                <th scope="col" class="py-3 px-6">Precio</th>
                 <th scope="col" class="py-3 px-6 text-center">Opciones</th>
             </thead>
             <tbody>
@@ -46,6 +47,8 @@
                         <td class="py-4 px-6"> <?=hh($fila['album'])?> </td>
                         <!-- Año album -->
                         <td class="py-4 px-6"> <?=hh($fila['album_anyo'])?> </td>
+                        <!-- Precio album -->
+                        <td class="py-4 px-6"> <?=hh(dinero($fila['precio']))?> </td>
                         <td class="py-4 px-6 text-center">
                             <!-- Modificar albumes  -->
                             <a href="modificar.php?albumid=<?= $fila['albumid'] ?>&titulo=<?= $fila['album'] ?>&album_anyo=<?= $fila['album_anyo'] ?>" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
@@ -62,6 +65,8 @@
                 <?php endforeach ?>
 
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td class="py-4 px-6 text-center">
                         <!-- Insertar albumes -->
