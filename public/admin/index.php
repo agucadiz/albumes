@@ -43,8 +43,8 @@
             <tbody>
                 <?php foreach ($sent as $fila) : ?>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <!-- Nombre album --> 
-                        <td class="py-4 px-6"> <?=hh($fila['album'])?> </td>
+                        <!-- Nombre album y link a temas --> 
+                        <td class="py-4 px-6"><a href="temas.php?id=<?= $fila['albumid'] ?>"> <?=hh($fila['album'])?> </a></td>
                         <!-- Año album -->
                         <td class="py-4 px-6"> <?=hh($fila['album_anyo'])?> </td>
                         <!-- Precio album -->
