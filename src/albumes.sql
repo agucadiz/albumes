@@ -62,12 +62,14 @@ CREATE TABLE usuarios (
 INSERT INTO temas (titulo, anyo, duracion)
 VALUES ('Pisando fuerte', '1990', '00:03:00'),
        ('Sobreviviré', '1995', '00:02:30'),
-       ('Te necesito', '2000', '00:04:00');
+       ('Te necesito', '2000', '00:04:00'),
+       ('hola', '2000', '00:04:00');
 
 INSERT INTO album_tema (album_id, tema_id)
 VALUES ('1', '1'),
        ('2', '2'),
-       ('3', '3');
+       ('3', '3'),
+       ('3', '4');
 
 INSERT INTO artista_tema (artista_id, tema_id)
 VALUES ('1', '1'),
@@ -77,5 +79,4 @@ VALUES ('1', '1'),
 INSERT INTO usuarios (usuario, password)
     VALUES ('admin', crypt('admin', gen_salt('bf', 10))),
            ('pepe', crypt('pepe', gen_salt('bf', 10)));
-
 

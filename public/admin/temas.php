@@ -19,12 +19,17 @@
     $id = obtener_get('id');
     //Consulta.
     //Aparte del prepare/execute esta tb el query, consulta simple.
-    $sent = $pdo->prepare("SELECT titulo, anyo, duracion 
+    $sent = $pdo->prepare("SELECT temas.titulo, temas.anyo, temas.duracion 
                          FROM temas 
-                         JOIN album_tema ON temas.id=album_tema.album_id 
-                         WHERE id = :id 
+                         JOIN album_tema ON temas.id=album_tema.tema_id 
+                         WHERE album_tema.album_id = :id
                          ORDER BY titulo");
+    //Sumatorio duración
     $sent->execute([':id' => $id]);
+    $sent2 = $pdo->query("SELECT sum(duracion)
+                          FROM album_tema at JOIN temas t ON at.tema_id = t.id
+                          WHERE at.album_id = $id");
+    $duracion = $sent2->fetch();
     ?>
 
 <div class="container mx-auto relative mt-10 mb-10 shadow-md sm:rounded-lg">
@@ -45,7 +50,11 @@
                         <td class="py-4 px-6 text-center"> <?=hh($fila['duracion'])?> </td>
                     </tr>
                 <?php endforeach ?>
-
+                <!--Sumatorio duración -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th class="py-4 px-6">Duracion Albúm</th>
+                        <td class="py-4 px-6"><?=hh($duracion['sum'])?></td>
+                    </tr>
             </tbody>
         </table>
     </div>

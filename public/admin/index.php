@@ -27,7 +27,7 @@
     //Consulta tabla
     $pdo = conectar();
     $sent = $pdo->query("SELECT albumes.id AS albumid, albumes.titulo AS album, albumes.anyo AS album_anyo, precio, temas.id AS cancionid, temas.titulo AS cancion
-                           FROM albumes FULL JOIN temas ON albumes.id=temas.id 
+                           FROM albumes JOIN temas ON albumes.id=temas.id 
                            ORDER BY albumes.titulo");
     ?>
 
