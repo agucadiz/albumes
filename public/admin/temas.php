@@ -32,7 +32,7 @@
     $duracion = $sent2->fetch();
     ?>
 
-<div class="container mx-auto relative mt-10 mb-10 shadow-md sm:rounded-lg">
+    <div class="container mx-auto relative mt-10 mb-10 shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <th scope="col" class="py-3 px-6">Titulo</th>
@@ -42,25 +42,30 @@
             <tbody>
                 <?php foreach ($sent as $fila) : ?>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <!-- Titulo --> 
-                        <td class="py-4 px-6"> <?=hh($fila['titulo'])?> </a></td>
+                        <!-- Titulo -->
+                        <td class="py-4 px-6"> <?= hh($fila['titulo']) ?> </a></td>
                         <!-- Año -->
-                        <td class="py-4 px-6 text-center"> <?=hh($fila['anyo'])?> </td>
+                        <td class="py-4 px-6 text-center"> <?= hh($fila['anyo']) ?> </td>
                         <!-- Duración -->
-                        <td class="py-4 px-6 text-center"> <?=hh($fila['duracion'])?> </td>
+                        <td class="py-4 px-6 text-center"> <?= hh($fila['duracion']) ?> </td>
                     </tr>
                 <?php endforeach ?>
-                <!--Sumatorio duración -->
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th class="py-4 px-6">Duracion Albúm</th>
-                        <td class="py-4 px-6"><?=hh($duracion['sum'])?></td>
-                    </tr>
+                <!-- Sumatorio duración -->
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td></td>
+                    <td></td>
+                    <td class="py-4 px-6 text-center"><?= hh($duracion['sum']) ?></td>
+                </tr>
             </tbody>
         </table>
     </div>
 
-
-
+    <!-- Insertar nuevo tema -->
+    <div class="container mx-auto relative mt-10 mb-10">
+        <a href="insertar_tema.php" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+            Insertar tema
+        </a>
+    </div>
 
     <!--JS-->
     <script src="/js/flowbite/flowbite.js"></script>

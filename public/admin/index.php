@@ -26,8 +26,8 @@
 
     //Consulta tabla
     $pdo = conectar();
-    $sent = $pdo->query("SELECT albumes.id AS albumid, albumes.titulo AS album, albumes.anyo AS album_anyo, precio, temas.id AS cancionid, temas.titulo AS cancion
-                           FROM albumes JOIN temas ON albumes.id=temas.id 
+    $sent = $pdo->query("SELECT albumes.id AS albumid, albumes.titulo AS album, albumes.anyo AS album_anyo, precio
+                           FROM albumes 
                            ORDER BY albumes.titulo");
     ?>
 
@@ -43,12 +43,12 @@
             <tbody>
                 <?php foreach ($sent as $fila) : ?>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <!-- Nombre album y link a temas --> 
-                        <td class="py-4 px-6"><a href="temas.php?id=<?= $fila['albumid'] ?>"> <?=hh($fila['album'])?> </a></td>
+                        <!-- Nombre album y link a temas -->
+                        <td class="py-4 px-6"><a href="temas.php?id=<?= $fila['albumid'] ?>"> <?= hh($fila['album']) ?> </a></td>
                         <!-- Año album -->
-                        <td class="py-4 px-6"> <?=hh($fila['album_anyo'])?> </td>
+                        <td class="py-4 px-6"> <?= hh($fila['album_anyo']) ?> </td>
                         <!-- Precio album -->
-                        <td class="py-4 px-6"> <?=hh(dinero($fila['precio']))?> </td>
+                        <td class="py-4 px-6"> <?= hh(dinero($fila['precio'])) ?> </td>
                         <td class="py-4 px-6 text-center">
                             <!-- Modificar albumes  -->
                             <a href="modificar.php?albumid=<?= $fila['albumid'] ?>&titulo=<?= $fila['album'] ?>&album_anyo=<?= $fila['album_anyo'] ?>" class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
@@ -63,20 +63,15 @@
                         </td>
                     </tr>
                 <?php endforeach ?>
-
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="py-4 px-6 text-center">
-                        <!-- Insertar albumes -->
-                        <a href="insertar.php" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            Insertar album
-                        </a>
-                    </td>
-                </tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- Insertar nuevo tema -->
+    <div class="container mx-auto relative mt-10 mb-10">
+        <a href="insertar.php" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+            Insertar album
+        </a>
     </div>
 
     <!-- Ventana modal Borrar-->
