@@ -55,3 +55,20 @@ function dinero($s)
 {
     return number_format($s, 2, ',', ' ') . ' €';
 }
+
+//Carrito
+function carrito()
+{
+    if (!isset($_SESSION['carrito'])) {
+        $_SESSION['carrito'] = serialize(new \App\Generico\Carrito());
+    }
+
+    return $_SESSION['carrito'];
+}
+
+function carrito_vacio()
+{
+    $carrito = unserialize(carrito());
+
+    return $carrito->vacio();
+}
